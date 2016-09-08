@@ -26,6 +26,10 @@
         {
             "taskName": "start",
             "args": ["run", "start"]
+        },
+        {
+            "taskName": "build",
+            "args": ["run", "start"]
         }
     ]
 }

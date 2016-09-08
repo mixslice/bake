@@ -3,7 +3,6 @@ const subtract = function (rgs, block) {
   const list = [];
   let start = block.x;
   let end;
-
   for (const rg of rgs) {
     if (rg.x < block.y && rg.y > block.x) {
       if (rg.x > start) {
@@ -23,13 +22,23 @@ const subtract = function (rgs, block) {
 
 // concat
 const concat = function (r1, r2) {
-  const newR1 = r1.map(({ x, y }) => ({
-    x,
-    y,
-    r: y - x,
-  }));
+  const rgs = [...r1, ...r2]
+  .sort(({ x: ax }, { x: bx }) => ax - bx);
 
-  return newR1;
+  const list = [];
+  let { x: start, y: end } = rgs[0];
+  for (const rg of rgs) {
+    if (rg.x > end) {
+      list.push({ x: start, y: end });
+      start = rg.x;
+    }
+    end = rg.y;
+  }
+
+  list.push({ x: start, y: end });
+
+
+  return list;
 };
 
 // sorted array
@@ -42,5 +51,7 @@ const arr = [
 
 const d = { x: 4, y: 11 };
 const result = subtract(arr, d);
-console.log(result);
-console.log(concat(arr, result));
+console.log('subtract', result);
+console.log('concat', concat(arr, [
+  { x: 12, y: 17 },
+]));
