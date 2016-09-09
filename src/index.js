@@ -9,7 +9,6 @@ const subtract = function (rgs, block) {
         end = rg.x;
         list.push({ x: start, y: end });
       }
-
       start = rg.y;
     }
   }
@@ -36,8 +35,6 @@ const concat = function (r1, r2) {
   }
 
   list.push({ x: start, y: end });
-
-
   return list;
 };
 
