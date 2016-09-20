@@ -32,9 +32,9 @@ const processData = ({
   console.log(spine);
 };
 
-const filename = path.join(__dirname, 'sample/test.xml');
+const filename = path.join(__dirname, '../sample/test.xml');
 
 readFilePromise(filename)
 .then(data => parserPromise(data))
 .then(processData)
-.catch(e => console.err(e));
+.catch(e => console.log(e));

@@ -29,7 +29,7 @@
         },
         {
             "taskName": "build",
-            "args": ["run", "start"]
+            "args": ["run", "dev"]
         }
     ]
 }
