@@ -1,10 +1,14 @@
 import path from 'path';
+import { normalize } from 'normalizr';
 import {
   parserPromise,
   readFilePromise,
 } from './utils';
+import {
+  clipArraySchema,
+} from './schema';
 
-const mapReduce = (arr) => (
+const mapReduce = arr => (
   arr
   .map(d => ({ [d.$.id]: d.$ }))
   .reduce((result, item) => {
@@ -27,9 +31,10 @@ const processData = ({
   const effects = mapReduce(effect);
 
   const project = library[0].event[0].project[0];
-  const spine = project.sequence[0].spine[0].clip;
+  const spine = project.sequence[0].spine[0];
 
-  console.log(spine);
+  const entities = normalize(spine.clip, clipArraySchema).entities;
+  console.log(entities.clips);
 };
 
 const filename = path.join(__dirname, '../sample/test.xml');

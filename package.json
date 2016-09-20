@@ -25,6 +25,7 @@
     "eslint": "^3.5.0",
     "eslint-plugin-import": "^1.15.0",
     "normalizr": "^2.2.1",
+    "uuid": "^2.0.3",
     "xml2js": "^0.4.17"
   }
 }
