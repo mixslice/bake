@@ -43,11 +43,40 @@ const normalizeEntities = ({
   return entities;
 };
 
+const groupClips = (data) => {
+  const clips = data.clips;
+  const groups = {};
+
+  for (const clipId of Object.keys(clips)) {
+    const clip = clips[clipId];
+    const list = groups[clip.$.lane];
+    if (list) {
+      list.push(clip);
+    } else {
+      groups[clip.$.lane] = [clip];
+    }
+  }
+  return groups;
+};
+
+const splitClips = (data) => {
+  for (const lane of Object.keys(data).sort()) {
+    console.log(lane);
+    const clipsInLane = data[lane];
+    for (const clip of clipsInLane) {
+      console.log(clip);
+    }
+  }
+  return data;
+};
+
 // main
 const filename = path.join(__dirname, '../sample/test.xml');
 
 readFilePromise(filename)
 .then(data => parserPromise(data))
 .then(normalizeEntities)
-.then(d => console.log(d))
+.then(groupClips)
+.then(splitClips)
+// .then(d => console.log(d))
 .catch(e => console.log(e));
