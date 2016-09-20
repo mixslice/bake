@@ -13,6 +13,9 @@ const clip = new Schema('clips', {
       });
 
       delete output.clip;
+    } else if (key === 'video') {
+      output.video = output.video[0];
+      output.$.ref = output.video.$.ref;
     }
   },
 });
