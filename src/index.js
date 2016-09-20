@@ -8,6 +8,12 @@ import {
   clipArraySchema,
 } from './schema';
 
+
+let formats = [];
+let assets = [];
+let effects = [];
+
+
 const mapReduce = arr => (
   arr
   .map(d => ({ [d.$.id]: d.$ }))
@@ -19,27 +25,29 @@ const mapReduce = arr => (
   })
 );
 
-const processData = ({
+const normalizeEntities = ({
   fcpxml: {
     resources,
     library,
   },
 }) => {
   const { format, asset, effect } = resources[0];
-  const formats = mapReduce(format);
-  const assets = mapReduce(asset);
-  const effects = mapReduce(effect);
+  formats = mapReduce(format);
+  assets = mapReduce(asset);
+  effects = mapReduce(effect);
 
   const project = library[0].event[0].project[0];
   const spine = project.sequence[0].spine[0];
 
   const entities = normalize(spine.clip, clipArraySchema).entities;
-  console.log(entities.clips);
+  return entities;
 };
 
+// main
 const filename = path.join(__dirname, '../sample/test.xml');
 
 readFilePromise(filename)
 .then(data => parserPromise(data))
-.then(processData)
+.then(normalizeEntities)
+.then(d => console.log(d))
 .catch(e => console.log(e));

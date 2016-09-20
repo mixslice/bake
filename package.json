@@ -21,7 +21,9 @@
     "eslint-config-airbnb-base": "^7.1.0"
   },
   "dependencies": {
+    "babel-eslint": "^6.1.2",
     "babel-preset-node6": "^11.0.0",
+    "babel-preset-stage-2": "^6.13.0",
     "eslint": "^3.5.0",
     "eslint-plugin-import": "^1.15.0",
     "normalizr": "^2.2.1",
