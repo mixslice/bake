@@ -3,9 +3,5 @@
   "env": {
     "node": true,
     "mocha": true
-  },
-  "rules": {
-    "func-names": 0,
-    "global-require": 0
   }
 }

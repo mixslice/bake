@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+
+<fcpxml version="1.5">
+    <resources>
+        <format id="r1" name="FFVideoFormat720p30" frameDuration="100/3000s" width="1280" height="720"/>
+        <asset id="r2" name="WP_20140830_14_39_10_Pro" uid="0D3431DCA9CA1E44D000A33D4D99CF3D" src="file:///Users/zzq889/Movies/test.fcpbundle/7-09-2016/Original%20Media/WP_20140830_14_39_10_Pro.mp4" start="0s" duration="441142/30000s" hasVideo="1" format="r1" hasAudio="1" audioSources="1" audioChannels="1" audioRate="48000">
+            <bookmark>Ym9va1QDAAAAAAQQMAAAAI3Ze/2GNBS65TQ75S7Uq/E8nQDFs6o4sAGEtEkh/pbvUAIAAAQAAAADAwAAAAgAKAUAAAABAQAAVXNlcnMAAAAGAAAAAQEAAHp6cTg4OQAABgAAAAEBAABNb3ZpZXMAAA4AAAABAQAAdGVzdC5mY3BidW5kbGUAAAkAAAABAQAANy0wOS0yMDE2AAAADgAAAAEBAABPcmlnaW5hbCBNZWRpYQAAHAAAAAEBAABXUF8yMDE0MDgzMF8xNF8zOV8xMF9Qcm8ubXA0HAAAAAEGAAAQAAAAIAAAADAAAABAAAAAWAAAAGwAAACEAAAACAAAAAQDAAD5ZgIAAAAAAAgAAAAEAwAAFTcJAAAAAAAIAAAABAMAALo3CQAAAAAACAAAAAQDAADF1T4FAAAAAAgAAAAEAwAAztU+BQAAAAAIAAAABAMAAPPVPgUAAAAACAAAAAQDAAD21T4FAAAAABwAAAABBgAAzAAAANwAAADsAAAA/AAAAAwBAAAcAQAALAEAAAgAAAAABAAAQbmxqQ4AAAAYAAAAAQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAgAAAAEAwAABQAAAAAAAAAEAAAAAwMAAPUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAAAAaCc6AAAACAAAAAAEAABBuV6xxgAAACQAAAABAQAAMTE3M0Q3NkQtMEVCRC0zOTA0LThCMDUtOUQ4QUQzRTRFNzAzGAAAAAECAACBAAAAAQAAAO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAAAQUAAMwAAAD+////AQAAAAAAAAAQAAAABBAAAKgAAAAAAAAABRAAADwBAAAAAAAAEBAAAHABAAAAAAAAQBAAAGABAAAAAAAAAiAAADwCAAAAAAAABSAAAKwBAAAAAAAAECAAALwBAAAAAAAAESAAAPABAAAAAAAAEiAAANABAAAAAAAAEyAAAOABAAAAAAAAICAAABwCAAAAAAAAMCAAAEgCAAAAAAAAAcAAAJABAAAAAAAAEcAAACAAAAAAAAAAEsAAAKABAAAAAAAAENAAAAQAAAAAAAAA</bookmark>
+        </asset>
+        <asset id="r3" name="WP_20140830_15_13_44_Pro" uid="A62CBA0A227B425227D91AF6BFDD33F6" src="file:///Users/zzq889/Movies/test.fcpbundle/7-09-2016/Original%20Media/WP_20140830_15_13_44_Pro.mp4" start="0s" duration="206969/30000s" hasVideo="1" format="r1" hasAudio="1" audioSources="1" audioChannels="1" audioRate="48000">
+            <bookmark>Ym9va1QDAAAAAAQQMAAAAPfQfDhQL6dOjQf2s1x9yX1lYfOEbL8sF/EMJO54tTp+UAIAAAQAAAADAwAAAAgAKAUAAAABAQAAVXNlcnMAAAAGAAAAAQEAAHp6cTg4OQAABgAAAAEBAABNb3ZpZXMAAA4AAAABAQAAdGVzdC5mY3BidW5kbGUAAAkAAAABAQAANy0wOS0yMDE2AAAADgAAAAEBAABPcmlnaW5hbCBNZWRpYQAAHAAAAAEBAABXUF8yMDE0MDgzMF8xNV8xM180NF9Qcm8ubXA0HAAAAAEGAAAQAAAAIAAAADAAAABAAAAAWAAAAGwAAACEAAAACAAAAAQDAAD5ZgIAAAAAAAgAAAAEAwAAFTcJAAAAAAAIAAAABAMAALo3CQAAAAAACAAAAAQDAADF1T4FAAAAAAgAAAAEAwAAztU+BQAAAAAIAAAABAMAAPPVPgUAAAAACAAAAAQDAAAI1j4FAAAAABwAAAABBgAAzAAAANwAAADsAAAA/AAAAAwBAAAcAQAALAEAAAgAAAAABAAAQbmxsSgAAAAYAAAAAQIAAAEAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAgAAAAEAwAABQAAAAAAAAAEAAAAAwMAAPUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAAAAaCc6AAAACAAAAAAEAABBuV6xxgAAACQAAAABAQAAMTE3M0Q3NkQtMEVCRC0zOTA0LThCMDUtOUQ4QUQzRTRFNzAzGAAAAAECAACBAAAAAQAAAO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAAAAAAAQUAAMwAAAD+////AQAAAAAAAAAQAAAABBAAAKgAAAAAAAAABRAAADwBAAAAAAAAEBAAAHABAAAAAAAAQBAAAGABAAAAAAAAAiAAADwCAAAAAAAABSAAAKwBAAAAAAAAECAAALwBAAAAAAAAESAAAPABAAAAAAAAEiAAANABAAAAAAAAEyAAAOABAAAAAAAAICAAABwCAAAAAAAAMCAAAEgCAAAAAAAAAcAAAJABAAAAAAAAEcAAACAAAAAAAAAAEsAAAKABAAAAAAAAENAAAAQAAAAAAAAA</bookmark>
+        </asset>
+        <effect id="r4" name="Black &amp; White" uid=".../Effects.localized/Color.localized/Black &amp; White.localized/Black &amp; White.moef"/>
+    </resources>
+    <library location="file:///Users/zzq889/Movies/test.fcpbundle/">
+        <event name="7-09-2016" uid="AD556A98-D915-498B-8B87-D157E5360684">
+            <project name="test" uid="34023A65-E3EF-4876-B006-C045156DCE53">
+                <sequence duration="64700/3000s" format="r1" tcStart="0s" tcFormat="NDF" audioLayout="stereo" audioRate="48k">
+                    <spine>
+                        <clip name="WP_20140830_14_39_10_Pro" offset="0s" duration="44100/3000s" tcFormat="NDF">
+                            <video offset="0s" ref="r2" duration="44100/3000s">
+                                <audio lane="-1" offset="0s" ref="r2" duration="10587408/720000s" role="dialogue" srcCh="1"/>
+                            </video>
+                            <clip name="WP_20140830_15_13_44_Pro" lane="2" offset="39/10s" duration="9200/3000s" start="19/5s" tcFormat="NDF">
+                                <video offset="0s" ref="r3" duration="20600/3000s">
+                                    <audio lane="-1" offset="0s" ref="r3" duration="4967256/720000s" role="dialogue" srcCh="1"/>
+                                </video>
+                            </clip>
+                            <clip name="WP_20140830_14_39_10_Pro" lane="1" offset="157/30s" duration="44100/3000s" tcFormat="NDF">
+                                <adjust-crop mode="trim">
+                                    <trim-rect left="88.8889"/>
+                                </adjust-crop>
+                                <video offset="0s" ref="r2" duration="44100/3000s">
+                                    <audio lane="-1" offset="0s" ref="r2" duration="10587408/720000s" role="dialogue" srcCh="1"/>
+                                </video>
+                                <filter-video ref="r4" name="Black &amp; White"/>
+                            </clip>
+                        </clip>
+                        <clip name="WP_20140830_15_13_44_Pro" offset="44100/3000s" duration="20600/3000s" tcFormat="NDF">
+                            <video offset="0s" ref="r3" duration="20600/3000s">
+                                <audio lane="-1" offset="0s" ref="r3" duration="4967256/720000s" role="dialogue" srcCh="1"/>
+                            </video>
+                        </clip>
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+        <smart-collection name="Projects" match="all">
+            <match-clip rule="is" type="project"/>
+        </smart-collection>
+        <smart-collection name="All Video" match="any">
+            <match-media rule="is" type="videoOnly"/>
+            <match-media rule="is" type="videoWithAudio"/>
+        </smart-collection>
+        <smart-collection name="Audio Only" match="all">
+            <match-media rule="is" type="audioOnly"/>
+        </smart-collection>
+        <smart-collection name="Stills" match="all">
+            <match-media rule="is" type="stills"/>
+        </smart-collection>
+        <smart-collection name="Favorites" match="all">
+            <match-ratings value="favorites"/>
+        </smart-collection>
+    </library>
+</fcpxml>

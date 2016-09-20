@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "eslint": "^3.4.0",
-    "eslint-plugin-import": "^1.14.0"
+    "eslint-plugin-import": "^1.14.0",
+    "xml2js": "^0.4.17"
   }
 }
