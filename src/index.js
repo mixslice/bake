@@ -20,6 +20,6 @@ readFilePromise(filename)
 .then(groupClips)
 .then(splitClips)
 .then(cakeHash)
-// .then(cakes => cakes.map(cake => console.log(cake)))
-.then(cakes => console.log(JSON.stringify(cakes)))
+.then((data) => { console.log(data); return data; })
+// .then(cakes => console.log(JSON.stringify(cakes)))
 .catch(e => console.log(e));

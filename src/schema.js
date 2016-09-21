@@ -14,7 +14,7 @@ const calculateFrames = (timestamp) => {
   }
 
   result = timestamp.match(numRe);
-  return Number(result[1]);
+  return Number(result[1]) * 30;
 };
 
 const clip = new Schema('clips', {
