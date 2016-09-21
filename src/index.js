@@ -8,6 +8,7 @@ import {
   groupClips,
 } from './normalize';
 import splitClips from './split';
+import cakeHash from './cakehash';
 
 
 // main
@@ -18,5 +19,7 @@ readFilePromise(filename)
 .then(normalizeEntities)
 .then(groupClips)
 .then(splitClips)
-.then(d => d.map(cake => console.log(cake)))
+.then(cakeHash)
+// .then(cakes => cakes.map(cake => console.log(cake)))
+.then(cakes => console.log(JSON.stringify(cakes)))
 .catch(e => console.log(e));
