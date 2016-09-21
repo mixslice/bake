@@ -18,5 +18,5 @@ readFilePromise(filename)
 .then(normalizeEntities)
 .then(groupClips)
 .then(splitClips)
-// .then(d => console.log(d))
+.then(d => d.map(cake => console.log(cake)))
 .catch(e => console.log(e));
