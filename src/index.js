@@ -22,7 +22,8 @@ readFilePromise(filename)
 .then(splitClips)
 .then(cakeHash)
 .then((data) => {
-  console.log(util.inspect(data, { depth: 4 }));
+  console.log(util.inspect(data, { depth: 3 }));
+  // console.log(JSON.stringify(data));
   return data;
 })
 .catch(e => console.log(e));

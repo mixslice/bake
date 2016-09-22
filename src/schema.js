@@ -1,45 +1,24 @@
 import { Schema, arrayOf } from 'normalizr';
 import uuid from 'uuid';
+import { calculateFrames } from './utils';
 
-
-const calculateFrames = (timestamp) => {
-  if (!timestamp) return 0;
-  if (!isNaN(timestamp)) return timestamp;
-
-  const fracRe = /(\d+)\/(\d+)s/i;
-  const numRe = /(\d+)s/i;
-  let result = timestamp.match(fracRe);
-  if (result) {
-    return (Number(result[1]) / Number(result[2])) * 30;
-  }
-
-  result = timestamp.match(numRe);
-  return Number(result[1]) * 30;
-};
 
 const clip = new Schema('clips', {
   idAttribute: () => uuid(),
+  defaults: { start: 0, lane: 0 },
   assignEntity: (output, key, value, input) => {
-    const newOutput = output;
-    newOutput.$.lane = Number(newOutput.$.lane) || 0;
     if (key === 'clip') {
-      input.clip.map((data) => {
-        const newData = data;
-        newData.$.offset = calculateFrames(newData.$.offset)
-        + (calculateFrames(input.$.offset) - calculateFrames(input.$.start));
-        return newData;
-      });
-
-      delete newOutput.clip;
-    } else if (key === 'video') {
-      newOutput.video = newOutput.video[0];
-      newOutput.$.ref = newOutput.video.$.ref;
-    } else if (key === '$') {
-      newOutput.$.offset = calculateFrames(input.$.offset);
-      newOutput.$.duration = calculateFrames(input.$.duration);
-      newOutput.$.start = calculateFrames(input.$.start);
+      delete output.clip;
+    } else if (key === 'offset') {
+      output.offset = calculateFrames(input.offset);
+    } else if (key === 'duration') {
+      output.duration = calculateFrames(input.duration);
+    } else if (key === 'start') {
+      output.start = calculateFrames(input.start);
+    } else if (key === 'lane') {
+      output.lane = Number(output.lane);
     } else if (key.startsWith('adjust')) {
-      newOutput.$.adjust = true;
+      output.adjust = true;
     }
   },
 });
@@ -48,5 +27,16 @@ clip.define({
   clip: arrayOf(clip),
 });
 
+const format = new Schema('formats');
+const asset = new Schema('assets');
+const effect = new Schema('effects');
+
+
 export const clipSchema = clip;
 export const clipArraySchema = arrayOf(clip);
+export const formatSchema = format;
+export const formatArraySchema = arrayOf(format);
+export const assetSchema = asset;
+export const assetArraySchema = arrayOf(asset);
+export const effectSchema = effect;
+export const effectArraySchema = arrayOf(effect);

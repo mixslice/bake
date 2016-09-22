@@ -1,7 +1,10 @@
 import { Parser } from 'xml2js';
 import fs from 'fs';
 
-const parser = new Parser();
+const parser = new Parser({
+  mergeAttrs: true,
+  explicitArray: false,
+});
 
 export function parserPromise(data) {
   return new Promise((resolve, reject) => {
@@ -28,3 +31,18 @@ export function readFilePromise(filePath, options) {
     });
   });
 }
+
+export const calculateFrames = (timestamp) => {
+  if (!timestamp) return 0;
+  if (!isNaN(timestamp)) return timestamp;
+
+  const fracRe = /(\d+)\/(\d+)s/i;
+  const numRe = /(\d+)s/i;
+  let result = timestamp.match(fracRe);
+  if (result) {
+    return (Number(result[1]) / Number(result[2])) * 30;
+  }
+
+  result = timestamp.match(numRe);
+  return Number(result[1]) * 30;
+};

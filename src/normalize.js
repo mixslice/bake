@@ -1,24 +1,12 @@
 import { normalize } from 'normalizr';
 import {
+  formatSchema,
+  assetArraySchema,
+  effectArraySchema,
   clipArraySchema,
 } from './schema';
+import { calculateFrames } from './utils';
 
-let formats = [];
-let assets = [];
-let effects = [];
-
-
-const mapReduce = (arr) => {
-  if (!arr) return [];
-  return arr
-  .map(d => ({ [d.$.id]: d.$ }))
-  .reduce((result, item) => {
-    const newResult = result;
-    const key = Object.keys(item)[0];
-    newResult[key] = item[key];
-    return newResult;
-  });
-};
 
 export const normalizeEntities = ({
   fcpxml: {
@@ -26,15 +14,30 @@ export const normalizeEntities = ({
     library,
   },
 }) => {
-  const { format, asset, effect } = resources[0];
-  formats = mapReduce(format);
-  assets = mapReduce(asset);
-  effects = mapReduce(effect);
+  const { format, asset, effect } = resources;
+  const assets = asset.constructor === Array ? asset : [asset];
+  const effects = effect.constructor === Array ? effect : [effect];
 
-  const project = library[0].event[0].project[0];
-  const spine = project.sequence[0].spine[0];
+  const clip = library.event.project.sequence.spine.clip;
+  const clips = clip.constructor === Array ? clip : [clip];
+  for (const cl of clips) {
+    if (cl.clip) {
+      const childClip = cl.clip;
+      cl.clip = childClip.constructor === Array ? childClip : [childClip];
 
-  const entities = normalize(spine.clip, clipArraySchema).entities;
+      for (const data of cl.clip) {
+        data.offset = calculateFrames(data.offset)
+        + (calculateFrames(cl.offset) - calculateFrames(cl.start));
+      }
+    }
+  }
+
+  const entities = {
+    ...normalize(format, formatSchema).entities,
+    ...normalize(assets, assetArraySchema).entities,
+    ...normalize(effects, effectArraySchema).entities,
+    ...normalize(clips, clipArraySchema).entities,
+  };
   return entities;
 };
 
@@ -44,11 +47,11 @@ export const groupClips = (data) => {
 
   for (const clipId of Object.keys(clips)) {
     const clip = clips[clipId];
-    const list = groups[clip.$.lane];
+    const list = groups[clip.lane];
     if (list) {
       list.push(clip);
     } else {
-      groups[clip.$.lane] = [clip];
+      groups[clip.lane] = [clip];
     }
   }
   return groups;
