@@ -1,5 +1,5 @@
 // main
-const subtract = function (rgs, block) {
+export default function subtract(rgs, block) {
   const list = [];
   let start = block.x;
   let end;
@@ -17,6 +17,4 @@ const subtract = function (rgs, block) {
     list.push({ x: start, y: block.y });
   }
   return list;
-};
-
-export default subtract;
+}

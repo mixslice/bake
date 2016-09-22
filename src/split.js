@@ -1,14 +1,23 @@
+function copyClips(clips) {
+  return clips.map(({ start, ...others }) => ({
+    start,
+    ...others,
+  }));
+}
+
 function mergeCake(cakes, clip) {
   const { $: { offset, duration, start, adjust }, ...nodes } = clip;
   const end = offset + duration;
 
   if (cakes.length > 0 && offset < cakes[cakes.length - 1].$.end) {
+    // clips that not in the main storyline
     const result = [];
     for (const cake of cakes) {
       if (offset >= cake.$.end || end <= cake.$.offset) {
         result.push(cake);
       }
       if (offset > cake.$.offset && offset < cake.$.end) {
+        // trim end
         const { $: { duration: cakeDuration, end: cakeEnd, ...params }, clips } = cake;
         result.push({
           $: {
@@ -22,14 +31,14 @@ function mergeCake(cakes, clip) {
       if (adjust && end > cake.$.offset && offset < cake.$.end) {
         // merge layers
         const { $: { offset: cakeOffset, end: cakeEnd }, clips } = cake;
-        const copiedClips = JSON.parse(JSON.stringify(clips));
+        const copiedClips = copyClips(clips);
         const newOffset = Math.max(cakeOffset, offset);
         const newEnd = Math.min(cakeEnd, end);
         // adjust clip start
         copiedClips[0].start += newOffset - cakeOffset;
         const newClip = {
           // start,
-          start: start + newOffset - offset,
+          start: start + (newOffset - offset),
           ...nodes,
         };
         // push new cake
@@ -42,6 +51,7 @@ function mergeCake(cakes, clip) {
           clips: [...copiedClips, newClip],
         });
       } else if (end > cake.$.offset && end <= cake.$.end) {
+        // overwrite to main storyline
         const newClip = { start, ...nodes };
         result.push({
           $: {
@@ -53,13 +63,9 @@ function mergeCake(cakes, clip) {
         });
       }
       if (end > cake.$.offset && end < cake.$.end) {
-        // trim cake
+        // trim start
         const { $: { offset: cakeOffset, end: cakeEnd }, clips } = cake;
         const newOffset = end;
-        clips.map((c) => {
-          c.start += newOffset - cakeOffset;
-          return c;
-        });
 
         result.push({
           $: {
@@ -67,7 +73,10 @@ function mergeCake(cakes, clip) {
             duration: cakeEnd - newOffset,
             end: cakeEnd,
           },
-          clips,
+          clips: clips.map(({ start: cstart, ...others }) => ({
+            start: cstart + (newOffset - cakeOffset),
+            ...others,
+          })),
         });
       }
     } // end no adjust

@@ -24,8 +24,7 @@ const clip = new Schema('clips', {
     if (key === 'clip') {
       input.clip.map((data) => {
         data.$.offset = calculateFrames(data.$.offset)
-        + calculateFrames(input.$.offset)
-        - calculateFrames(input.$.start);
+        + (calculateFrames(input.$.offset) - calculateFrames(input.$.start));
         return data;
       });
 

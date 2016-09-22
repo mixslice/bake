@@ -1,4 +1,5 @@
 import path from 'path';
+import util from 'util';
 import {
   parserPromise,
   readFilePromise,
@@ -20,6 +21,8 @@ readFilePromise(filename)
 .then(groupClips)
 .then(splitClips)
 .then(cakeHash)
-.then((data) => { console.log(data); return data; })
-// .then(cakes => console.log(JSON.stringify(cakes)))
+.then((data) => {
+  console.log(util.inspect(data, { depth: 4 }));
+  return data;
+})
 .catch(e => console.log(e));

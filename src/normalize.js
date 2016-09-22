@@ -8,16 +8,17 @@ let assets = [];
 let effects = [];
 
 
-const mapReduce = arr => (
-  arr
+const mapReduce = (arr) => {
+  if (!arr) return [];
+  return arr
   .map(d => ({ [d.$.id]: d.$ }))
   .reduce((result, item) => {
     const newResult = result;
     const key = Object.keys(item)[0];
     newResult[key] = item[key];
     return newResult;
-  })
-);
+  });
+};
 
 export const normalizeEntities = ({
   fcpxml: {
