@@ -20,24 +20,26 @@ const calculateFrames = (timestamp) => {
 const clip = new Schema('clips', {
   idAttribute: () => uuid(),
   assignEntity: (output, key, value, input) => {
-    output.$.lane = Number(output.$.lane) || 0;
+    const newOutput = output;
+    newOutput.$.lane = Number(newOutput.$.lane) || 0;
     if (key === 'clip') {
       input.clip.map((data) => {
-        data.$.offset = calculateFrames(data.$.offset)
+        const newData = data;
+        newData.$.offset = calculateFrames(newData.$.offset)
         + (calculateFrames(input.$.offset) - calculateFrames(input.$.start));
-        return data;
+        return newData;
       });
 
-      delete output.clip;
+      delete newOutput.clip;
     } else if (key === 'video') {
-      output.video = output.video[0];
-      output.$.ref = output.video.$.ref;
+      newOutput.video = newOutput.video[0];
+      newOutput.$.ref = newOutput.video.$.ref;
     } else if (key === '$') {
-      output.$.offset = calculateFrames(input.$.offset);
-      output.$.duration = calculateFrames(input.$.duration);
-      output.$.start = calculateFrames(input.$.start);
+      newOutput.$.offset = calculateFrames(input.$.offset);
+      newOutput.$.duration = calculateFrames(input.$.duration);
+      newOutput.$.start = calculateFrames(input.$.start);
     } else if (key.startsWith('adjust')) {
-      output.$.adjust = true;
+      newOutput.$.adjust = true;
     }
   },
 });

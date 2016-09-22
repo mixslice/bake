@@ -4,8 +4,5 @@
   "env": {
     "node": true,
     "mocha": true
-  },
-  "rules": {
-    // "no-param-reassign": 0
   }
 }
