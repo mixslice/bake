@@ -1,11 +1,9 @@
 {
-  "name": "render",
+  "name": "bake",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "engines": {
-    "node": ">= 6.6.0"
-  },
   "scripts": {
     "prestart": "npm run build",
     "start": "node dist/index.js",
