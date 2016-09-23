@@ -18,7 +18,7 @@ export default function cakeHash(cakes) {
     .update(JSON.stringify(normalizedCake))
     .digest('hex');
     return {
-      [md5]: normalizedCake,
+      [md5]: cake,
     };
   });
 }
