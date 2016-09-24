@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 
 export default function cakeHash(cakes) {
-  return cakes.map((cake) => {
+  const newCake = cakes.map((cake) => {
     const firstStart = cake.clips[0].start;
-    const normalizedCake = cake.clips.map(({
+    const normalizedClips = cake.clips.map(({
       lane: _lane,
       name: _name,
       tcFormat: _tcFormat,
@@ -13,12 +13,32 @@ export default function cakeHash(cakes) {
       offset: firstStart - start,
       ...props,
     }));
-    const md5 = crypto
+    const hash = crypto
     .createHash('md5')
-    .update(JSON.stringify(normalizedCake))
+    .update(JSON.stringify(normalizedClips))
     .digest('hex');
+
     return {
-      [md5]: cake,
+      hash,
+      start: firstStart,
+      duration: cake.duration,
+      clips: normalizedClips,
     };
   });
+
+  const hashMap = {};
+  for (const cake of newCake) {
+    const { hash, start, duration, clips } = cake;
+    const end = start + duration;
+    const obj = hashMap[hash];
+    if (!obj) {
+      hashMap[hash] = {
+        range: [{ start, end }],
+        clips,
+      };
+    } else {
+      obj.range.push({ start, end });
+    }
+  }
+  return hashMap;
 }
