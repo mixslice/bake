@@ -2,6 +2,8 @@
 
 Bake is a distributed incremental rendering system for none-linear editing system.
 
+[bake-worker](https://github.com/zzq889/bake-worker) is an application which processes rendering. It can be deployed separately and works with Bake through an API.
+
 ## Cake
 
 `cake` describe a minimal render unit for workers. Each clip inside cake has the same duration. A clip's `offset` value is the shift to the start of the first clip.
@@ -26,3 +28,4 @@ Please take a look at the [sample output](https://gist.github.com/zzq889/c639c42
 ## Resources
 
 - [Algorithm](https://drive.google.com/open?id=1WyTdW3FhxeHdlc-loAnqd5VzO0-PBm-ME2XNACtRjrU)
+- [Final Cut Pro X XML Format](https://developer.apple.com/library/content/documentation/FinalCutProX/Reference/FinalCutProXXMLFormat/Introduction/Introduction.html)
