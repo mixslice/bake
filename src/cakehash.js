@@ -1,7 +1,17 @@
 import crypto from 'crypto';
+import { mergeRanges } from './merge';
+import { getRenderedObjectWithHash } from './renderStore';
+import { subtract } from './utils';
 
-export default function cakeHash(cakes) {
-  const newCake = cakes.map((cake) => {
+/**
+ * calculate hash of cakes
+ *
+ * @export
+ * @param {any[]} cakes
+ * @returns
+ */
+export function calculateCakeHash(cakes) {
+  const newCakes = cakes.map((cake) => {
     const firstStart = cake.clips[0].start;
     const normalizedClips = cake.clips.map(({
       lane: _lane,
@@ -21,24 +31,54 @@ export default function cakeHash(cakes) {
     return {
       hash,
       start: firstStart,
+      end: firstStart + cake.duration,
       duration: cake.duration,
       clips: normalizedClips,
     };
   });
 
+  return newCakes;
+}
+
+export function mergeHashMap(cakes) {
   const hashMap = {};
-  for (const cake of newCake) {
-    const { hash, start, duration, clips } = cake;
-    const end = start + duration;
+  for (const cake of cakes) {
+    const { hash, start, end, clips } = cake;
     const obj = hashMap[hash];
     if (!obj) {
       hashMap[hash] = {
-        range: [{ start, end }],
+        ranges: [{ start, end }],
         clips,
       };
     } else {
-      obj.range.push({ start, end });
+      obj.ranges = mergeRanges({ start, end }, ...obj.ranges);
     }
   }
   return hashMap;
+}
+
+/**
+ * filter out already rendered media
+ *
+ * @param {Object} hashMap
+ * @returns {Object} Returns the new cakes
+ */
+export function filterRendered(hashMap) {
+  const result = {};
+  for (const key of Object.keys(hashMap)) {
+    const renderedRanges = getRenderedObjectWithHash(key);
+    const cake = hashMap[key];
+    if (renderedRanges) {
+      const { ranges, ...cakeProps } = cake;
+      const newRanges = ranges
+      .map(range => subtract(range, renderedRanges))
+      .reduce((a, b) => ({ ...a, ...b }));
+      if (newRanges.length > 0) {
+        result[key] = { ranges: newRanges, ...cakeProps };
+      }
+    } else {
+      result[key] = cake;
+    }
+  }
+  return result;
 }

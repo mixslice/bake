@@ -1,3 +1,9 @@
+/**
+ *
+ *
+ * @param {{start}[]} clips
+ * @returns {any[]}
+ */
 function copyClips(clips) {
   return clips.map(({ start, ...props }) => ({
     start,
@@ -5,6 +11,13 @@ function copyClips(clips) {
   }));
 }
 
+/**
+ * merge clip into cakes
+ *
+ * @param {any[]} cakes
+ * @param {{offset, duration, start, adjust}} clip
+ * @returns {any[]}
+ */
 function mergeCake(cakes, clip) {
   const { offset, duration, start, adjust, ...props } = clip;
   const end = offset + duration;
@@ -85,6 +98,13 @@ function mergeCake(cakes, clip) {
   return cakes;
 }
 
+
+/**
+ * slice clips into cakes
+ *
+ * @param {{ lane: any[] }} data
+ * @returns
+ */
 const splitClips = (data) => {
   let cakes = [];
 

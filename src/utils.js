@@ -46,3 +46,31 @@ export const calculateFrames = (timestamp) => {
   result = timestamp.match(numRe);
   return Number(result[1]) * 30;
 };
+
+/**
+ * subtract ranges from block
+ *
+ * @export
+ * @param {{start, end}} block
+ * @param {{start, end}[]} rgs
+ * @returns
+ */
+export function subtract(block, rgs) {
+  const list = [];
+  let start = block.start;
+  let end;
+  for (const rg of rgs) {
+    if (rg.start < block.end && rg.end > block.start) {
+      if (rg.start > start) {
+        end = rg.start;
+        list.push({ start, end });
+      }
+      start = rg.end;
+    }
+  }
+
+  if (start < block.end) {
+    list.push({ start, end: block.end });
+  }
+  return list;
+}

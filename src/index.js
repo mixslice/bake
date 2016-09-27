@@ -9,18 +9,26 @@ import {
   groupClips,
 } from './normalize';
 import splitClips from './split';
-import cakeHash from './cakehash';
+import {
+  calculateCakeHash,
+  mergeHashMap,
+  filterRendered,
+} from './cakehash';
 
 
 // main
 const filename = path.join(__dirname, '../sample/test.xml');
 
-readFilePromise(filename)
+const cakes = readFilePromise(filename)
 .then(data => parserPromise(data))
 .then(normalizeEntities)
 .then(groupClips)
 .then(splitClips)
-.then(cakeHash)
+.then(calculateCakeHash);
+
+cakes
+.then(mergeHashMap)
+.then(filterRendered)
 .then((data) => {
   console.log(util.inspect(data, { depth: 3 }));
   // console.log(JSON.stringify(data));
