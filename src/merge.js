@@ -1,12 +1,12 @@
 // concat
-function extract({ start: x1, end: y1, data }, { start: x2, end: y2 }) {
+function trim({ start: x1, end: y1, data }, { start: x2, end: y2 }) {
   if (x1 === x2 && y1 === y2) {
     return data;
   }
   return `${data}{${x2}:${y2}}`;
 }
 
-function mergeData(a, b) {
+function concat(a, b) {
   return a + b;
 }
 
@@ -45,7 +45,7 @@ export function mergeRangesWithData(...ranges) {
     }
 
     if (end < rg.end) {
-      data = mergeData(data, extract(rg, { start: Math.max(end, rg.start), end: rg.end }));
+      data = concat(data, trim(rg, { start: Math.max(end, rg.start), end: rg.end }));
       end = rg.end;
     }
   }
