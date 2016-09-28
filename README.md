@@ -6,7 +6,7 @@ Bake is a distributed incremental rendering system for none-linear editing syste
 
 ## Sequence
 
-<img width="476" alt="screen shot 2016-09-28 at 4 06 46 pm" src="https://cloud.githubusercontent.com/assets/685488/18905408/97b3fe62-8595-11e6-8a3e-6706e6eba143.png">
+<img width="510" alt="sequence" src="https://cloud.githubusercontent.com/assets/685488/18905800/6985fd4a-8597-11e6-89f7-3d99e310fc0d.png">
 
 ## Cake
 
