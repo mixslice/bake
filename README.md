@@ -4,6 +4,10 @@ Bake is a distributed incremental rendering system for none-linear editing syste
 
 [bake-worker](https://github.com/zzq889/bake-worker) is an application which processes rendering. It can be deployed separately and works with Bake through an API.
 
+## Sequence
+
+<img width="476" alt="screen shot 2016-09-28 at 4 06 46 pm" src="https://cloud.githubusercontent.com/assets/685488/18905408/97b3fe62-8595-11e6-8a3e-6706e6eba143.png">
+
 ## Cake
 
 `cake` describe a minimal render unit for workers. Each clip inside cake has the same duration. A clip's `offset` value is the shift to the start of the first clip.
