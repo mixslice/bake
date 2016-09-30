@@ -2,6 +2,16 @@ import { Schema, arrayOf } from 'normalizr';
 import uuid from 'uuid';
 import { calculateFrames } from './utils';
 
+const video = new Schema('videos', {
+  idAttribute: () => uuid(),
+  assignEntity: (output, key, value, input) => {
+    if (key === 'offset') {
+      output.offset = calculateFrames(input.offset);
+    } else if (key === 'duration') {
+      output.duration = calculateFrames(input.duration);
+    }
+  },
+});
 
 const clip = new Schema('clips', {
   idAttribute: () => uuid(),
@@ -24,6 +34,7 @@ const clip = new Schema('clips', {
 });
 
 clip.define({
+  video,
   clip: arrayOf(clip),
 });
 

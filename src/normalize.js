@@ -43,10 +43,15 @@ export const normalizeEntities = ({
 
 export const groupClips = (data) => {
   const clips = data.clips;
+  const videos = data.videos;
   const groups = {};
 
   for (const clipId of Object.keys(clips)) {
     const clip = clips[clipId];
+    if (clip.video) {
+      clip.video = videos[clip.video];
+    }
+
     const list = groups[clip.lane];
     if (list) {
       list.push(clip);
