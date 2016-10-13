@@ -26,5 +26,10 @@
     "normalizr": "^2.2.1",
     "uuid": "^2.0.3",
     "xml2js": "^0.4.17"
-  }
+  },
+  "repository": {
+    "url": "https://github.com/zzq889/bake.git",
+    "type": "git"
+  },
+  "license": "MIT"
 }
