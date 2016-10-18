@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import util from 'util';
 import { mergeRanges } from './merge';
 import { getRenderedObjectWithHash } from './renderStore';
 import { subtract } from './utils';
@@ -80,6 +79,48 @@ export function filterRendered(hashMap) {
       }
     } else {
       result[key] = cake;
+    }
+  }
+  return result;
+}
+
+
+/**
+ * trim rendered video for final output
+ *
+ * @export
+ * @param {any} clips
+ * @returns
+ */
+export function trimRendered(clips) {
+  const result = [];
+  for (const clip of clips) {
+    const renderedRanges = getRenderedObjectWithHash(clip.hash);
+    if (renderedRanges) {
+      const { start, end } = clip;
+      for (const { start: rs, end: re } of renderedRanges) {
+        const newClip = { src: `${clip.hash}-${rs}-${re}` };
+        if (start <= re && end >= rs) {
+          // clip range inside rendered ranges
+          if ((start < rs && end > re) ||
+          (Math.max(rs, start) === rs && Math.min(re, end) === re)) {
+            // using rendered range without trim
+            result.push(newClip);
+          } else if (start >= rs && start <= re) {
+            // trim start
+            const newEnd = Math.min(re, end);
+            newClip.start = start - rs;
+            newClip.end = newEnd - rs;
+            result.push(newClip);
+          } else {
+            newClip.start = 0;
+            newClip.end = end - rs;
+            result.push(newClip);
+          }
+        }
+      }
+    } else {
+      throw new Error('Still rendering');
     }
   }
   return result;

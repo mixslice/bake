@@ -65,7 +65,7 @@ export function subtract(block, rgs) {
         end = rg.start;
         list.push({ start, end });
       }
-      start = rg.end;
+      start = rg.end + 1;
     }
   }
 

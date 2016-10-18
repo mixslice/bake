@@ -13,6 +13,7 @@ import {
   calculateCakeHash,
   mergeHashMap,
   filterRendered,
+  trimRendered,
 } from './cakehash';
 
 
@@ -40,7 +41,9 @@ cakes
 // sequence for worker to concat
 cakes
 .then(data => data.map(({ hash, start, end }) => ({ hash, start, end })))
+.then(trimRendered)
 .then((data) => {
+  console.log(util.inspect(data, { depth: 3 }));
   // console.log(JSON.stringify(data));
 })
 .catch(e => console.log(e));
