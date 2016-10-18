@@ -32,9 +32,8 @@ cakes
 .then(filterRendered)
 .then(data => Object.keys(data).map(key => ({ hash: key, ...data[key] })))
 .then((data) => {
-  console.log(util.inspect(data, { depth: 4 }));
+  console.log(util.inspect(data, { depth: 3 }));
   // console.log(JSON.stringify(data));
-  return data;
 })
 .catch(e => console.log(e));
 
@@ -42,7 +41,6 @@ cakes
 cakes
 .then(data => data.map(({ hash, start, end }) => ({ hash, start, end })))
 .then((data) => {
-  console.log(JSON.stringify(data));
-  return data;
+  // console.log(JSON.stringify(data));
 })
 .catch(e => console.log(e));

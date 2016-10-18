@@ -18,7 +18,7 @@ export function mergeRanges(...ranges) {
   for (const rg of rgs) {
     if (rg.start > end) {
       list.push({ start, end });
-      start = rg.end;
+      start = rg.start;
       end = rg.end;
     }
 

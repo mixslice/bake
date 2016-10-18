@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import util from 'util';
 import { mergeRanges } from './merge';
 import { getRenderedObjectWithHash } from './renderStore';
 import { subtract } from './utils';
@@ -72,7 +73,8 @@ export function filterRendered(hashMap) {
       const { ranges, ...cakeProps } = cake;
       const newRanges = ranges
       .map(range => subtract(range, renderedRanges))
-      .reduce((a, b) => ({ ...a, ...b }));
+      .reduce((a, b) => [...a, ...b]);
+
       if (newRanges.length > 0) {
         result[key] = { ranges: newRanges, ...cakeProps };
       }
