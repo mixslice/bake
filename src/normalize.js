@@ -1,24 +1,21 @@
 import { normalize } from 'normalizr';
 import {
-  formatSchema,
-  assetArraySchema,
-  effectArraySchema,
+  // formatSchema,
+  // assetArraySchema,
+  // effectArraySchema,
   clipArraySchema,
 } from './schema';
 import { calculateFrames } from './utils';
 
 
 export const normalizeEntities = ({
-  fcpxml: {
-    resources,
-    library,
-  },
+  project,
 }) => {
-  const { format, asset, effect } = resources;
-  const assets = asset.constructor === Array ? asset : [asset];
-  const effects = effect.constructor === Array ? effect : [effect];
+  // const { format, asset, effect } = resources;
+  // const assets = asset.constructor === Array ? asset : [asset];
+  // const effects = effect.constructor === Array ? effect : [effect];
 
-  const clip = library.event.project.sequence.spine.clip;
+  const clip = project.sequence.spine.clip;
   const clips = clip.constructor === Array ? clip : [clip];
   for (const cl of clips) {
     if (cl.clip) {
@@ -33,9 +30,9 @@ export const normalizeEntities = ({
   }
 
   const entities = {
-    ...normalize(format, formatSchema).entities,
-    ...normalize(assets, assetArraySchema).entities,
-    ...normalize(effects, effectArraySchema).entities,
+    // ...normalize(format, formatSchema).entities,
+    // ...normalize(assets, assetArraySchema).entities,
+    // ...normalize(effects, effectArraySchema).entities,
     ...normalize(clips, clipArraySchema).entities,
   };
   return entities;
