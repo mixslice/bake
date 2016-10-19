@@ -124,8 +124,6 @@ export function trimRendered(clips) {
           result.push(newClip);
         }
       }
-    } else {
-      throw new Error('Still rendering');
     }
   }
   return result;
