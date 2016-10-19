@@ -13,3 +13,7 @@ RUN npm run build
 RUN rm -rf node_modules
 RUN yarn install --prod
 RUN tar zcvf dist.tar.gz dist node_modules sample package.json
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
