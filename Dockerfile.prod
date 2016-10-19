@@ -1,13 +1,7 @@
-FROM daocloud.io/zzq889/alpine-node-yarn
+FROM mhart/alpine-node
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
-COPY package.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
-RUN yarn install --prod
 COPY . /usr/src/app
 
 CMD [ "npm", "start" ]
