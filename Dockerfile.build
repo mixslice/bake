@@ -3,11 +3,10 @@ FROM daocloud.io/zzq889/alpine-node-yarn
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
 COPY package.json /usr/src/app/
 COPY yarn.lock /usr/src/app/
-RUN yarn install --prod
-COPY . /usr/src/app
+RUN yarn install
 
-CMD [ "npm", "start" ]
+COPY . /usr/src/app
+RUN npm run build
+RUN tar zcvf dist.tar.gz dist
