@@ -5,7 +5,6 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "prestart": "npm run build",
     "start": "node dist/index.js",
     "dev": "babel-node src/index.js",
     "lint": "eslint --fix src",
@@ -23,6 +22,7 @@
     "eslint-plugin-import": "^1.15.0"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "normalizr": "^2.2.1",
     "uuid": "^2.0.3",
     "xml2js": "^0.4.17"
