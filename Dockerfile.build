@@ -9,4 +9,7 @@ RUN yarn install
 
 COPY . /usr/src/app
 RUN npm run build
-RUN tar zcvf dist.tar.gz dist
+
+RUN rm -rf node_modules
+RUN yarn install --prod
+RUN tar zcvf dist.tar.gz dist node_modules
