@@ -98,25 +98,30 @@ export function trimRendered(clips) {
     const renderedRanges = getRenderedObjectWithHash(clip.hash);
     if (renderedRanges) {
       const { start, end } = clip;
-      for (const { start: rs, end: re } of renderedRanges) {
+      let cursor = start;
+      const sortedRanges = renderedRanges.sort((a, b) => {
+        if (a.start === b.start) {
+          return a.end > b.end;
+        }
+        return a.start > b.start;
+      });
+      for (const { start: rs, end: re } of sortedRanges) {
         const newClip = { src: `${clip.hash}-${rs}-${re}` };
-        if (start <= re && end >= rs) {
-          // clip range inside rendered ranges
-          if ((start < rs && end > re) ||
-          (Math.max(rs, start) === rs && Math.min(re, end) === re)) {
-            // using rendered range without trim
-            result.push(newClip);
-          } else if (start >= rs && start <= re) {
-            // trim start
-            const newEnd = Math.min(re, end);
-            newClip.start = start - rs;
-            newClip.end = newEnd - rs;
-            result.push(newClip);
-          } else {
-            newClip.start = 0;
+        if (cursor >= rs && cursor <= re) {
+          if (re > end) {
+            newClip.start = cursor - rs;
             newClip.end = end - rs;
             result.push(newClip);
+            break;
           }
+
+          if (cursor !== rs) {
+            newClip.start = cursor - rs;
+            newClip.end = re - rs;
+          }
+
+          cursor = re;
+          result.push(newClip);
         }
       }
     } else {

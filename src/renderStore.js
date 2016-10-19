@@ -1,4 +1,4 @@
-import { mergeRangesWithData } from './merge';
+// import { mergeRangesWithData } from './merge';
 
 /**
  * simulate the rendered media database
@@ -10,9 +10,10 @@ const rendered = {
  * ],
  */
   '9b9a6b534566e1425b9a59e4a3ad8934': [
-    { start: 0, end: 49 },
+    { start: 0, end: 50 },
+    { start: 20, end: 110 },
     { start: 50, end: 100 },
-    { start: 101, end: 140 },
+    { start: 100, end: 140 },
     { start: 786, end: 901 },
   ],
   e19cb00c065230a22f3ee596d9d2f3da: [
@@ -45,5 +46,8 @@ export function getRenderedObjectWithHash(hash) {
  * @param {Object} newRendered
  */
 export function saveRenderedObject(hash, newRendered) {
-  rendered[hash] = mergeRangesWithData(rendered, newRendered);
+  // rendered[hash] = mergeRangesWithData(rendered, newRendered);
+  const { start, end } = newRendered;
+  rendered[hash] = rendered[hash] || [];
+  rendered[hash].push({ start, end });
 }

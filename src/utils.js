@@ -57,15 +57,16 @@ export const calculateFrames = (timestamp) => {
  */
 export function subtract(block, rgs) {
   const list = [];
+  const sortedRanges = rgs.sort((a, b) => a.start > b.start);
   let start = block.start;
   let end;
-  for (const rg of rgs) {
+  for (const rg of sortedRanges) {
     if (rg.start < block.end && rg.end > block.start) {
       if (rg.start > start) {
         end = rg.start;
         list.push({ start, end });
       }
-      start = rg.end + 1;
+      start = rg.end;
     }
   }
 
