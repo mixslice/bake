@@ -4,6 +4,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 ADD /usr/src/app/dist.tar.gz /usr/src/app
+COPY sample /usr/src/app/sample
 
 EXPOSE 3000
 
