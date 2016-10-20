@@ -2,8 +2,8 @@ version: "2"
 
 services:
   bake-master:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.local
     ports:
       - "3000:3000"
-    volumes:
-      - .:/usr/src/app
