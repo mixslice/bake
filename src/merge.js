@@ -15,7 +15,7 @@ export function mergeRanges(...ranges) {
 
   const list = [];
   let { start, end } = rgs[0];
-  for (const rg of rgs) {
+  rgs.forEach((rg) => {
     if (rg.start > end) {
       list.push({ start, end });
       start = rg.start;
@@ -25,7 +25,7 @@ export function mergeRanges(...ranges) {
     if (end < rg.end) {
       end = rg.end;
     }
-  }
+  });
 
   list.push({ start, end });
   return list;
@@ -36,7 +36,7 @@ export function mergeRangesWithData(...ranges) {
 
   const list = [];
   let { start, end, data } = rgs[0];
-  for (const rg of rgs) {
+  rgs.forEach((rg) => {
     if (rg.start > end) {
       list.push({ start, end, data });
       start = rg.start;
@@ -48,7 +48,7 @@ export function mergeRangesWithData(...ranges) {
       data = concat(data, trim(rg, { start: Math.max(end, rg.start), end: rg.end }));
       end = rg.end;
     }
-  }
+  });
 
   list.push({ start, end, data });
   return list;

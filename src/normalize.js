@@ -17,17 +17,17 @@ export const normalizeEntities = ({
 
   const clip = project.sequence.spine.clip;
   const clips = clip.constructor === Array ? clip : [clip];
-  for (const cl of clips) {
+  clips.forEach((cl) => {
     if (cl.clip) {
       const childClip = cl.clip;
       cl.clip = childClip.constructor === Array ? childClip : [childClip];
-
-      for (const data of cl.clip) {
+      cl.clip.map((data) => {
         data.offset = calculateFrames(data.offset)
         + (calculateFrames(cl.offset) - calculateFrames(cl.start));
-      }
+        return data;
+      });
     }
-  }
+  });
 
   const entities = {
     // ...normalize(format, formatSchema).entities,
@@ -43,7 +43,7 @@ export const groupClips = (data) => {
   const videos = data.videos;
   const groups = {};
 
-  for (const clipId of Object.keys(clips)) {
+  Object.keys(clips).forEach((clipId) => {
     const clip = clips[clipId];
     if (clip.video) {
       clip.video = videos[clip.video];
@@ -55,6 +55,6 @@ export const groupClips = (data) => {
     } else {
       groups[clip.lane] = [clip];
     }
-  }
+  });
   return groups;
 };

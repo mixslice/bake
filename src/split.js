@@ -25,7 +25,7 @@ function mergeCake(cakes, clip) {
   if (cakes.length > 0 && offset < cakes[cakes.length - 1].end) {
     // clips that not in the main storyline
     const result = [];
-    for (const cake of cakes) {
+    cakes.forEach((cake) => {
       if (offset >= cake.end || end <= cake.offset) {
         result.push(cake);
       }
@@ -84,7 +84,7 @@ function mergeCake(cakes, clip) {
           })),
         });
       }
-    } // end no adjust
+    }); // end no adjust
     return result;
   }
 
@@ -106,15 +106,12 @@ function mergeCake(cakes, clip) {
  * @returns
  */
 const splitClips = (data) => {
-  let cakes = [];
-
-  for (const lane of Object.keys(data).sort()) {
+  const sortedKeys = Object.keys(data).sort();
+  return [[], ...sortedKeys].reduce((cakes, lane) => {
     const clipsInLane = data[lane].sort((a, b) => a.offset - b.offset);
-    for (const clip of clipsInLane) {
-      cakes = mergeCake(cakes, clip);
-    }
-  }
-  return cakes;
+    return [cakes, ...clipsInLane]
+    .reduce((result, clip) => mergeCake(result, clip));
+  });
 };
 
 export default splitClips;

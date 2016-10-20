@@ -18,7 +18,7 @@ export function calculateCakeHash(cakes) {
       name: _name,
       tcFormat: _tcFormat,
       start,
-      ...props,
+      ...props
     }) => ({
       offset: firstStart - start,
       ...props,
@@ -42,7 +42,7 @@ export function calculateCakeHash(cakes) {
 
 export function mergeHashMap(cakes) {
   const hashMap = {};
-  for (const cake of cakes) {
+  cakes.forEach((cake) => {
     const { hash, start, end, clips } = cake;
     const obj = hashMap[hash];
     if (!obj) {
@@ -53,7 +53,7 @@ export function mergeHashMap(cakes) {
     } else {
       obj.ranges = mergeRanges({ start, end }, ...obj.ranges);
     }
-  }
+  });
   return hashMap;
 }
 
@@ -65,7 +65,7 @@ export function mergeHashMap(cakes) {
  */
 export function filterRendered(hashMap) {
   const result = {};
-  for (const key of Object.keys(hashMap)) {
+  Object.keys(hashMap).forEach((key) => {
     const renderedRanges = getRenderedObjectWithHash(key);
     const cake = hashMap[key];
     if (renderedRanges) {
@@ -80,7 +80,7 @@ export function filterRendered(hashMap) {
     } else {
       result[key] = cake;
     }
-  }
+  });
   return result;
 }
 
@@ -94,7 +94,7 @@ export function filterRendered(hashMap) {
  */
 export function trimRendered(clips) {
   const result = [];
-  for (const clip of clips) {
+  clips.forEach((clip) => {
     const renderedRanges = getRenderedObjectWithHash(clip.hash);
     if (renderedRanges) {
       const { start, end } = clip;
@@ -105,14 +105,14 @@ export function trimRendered(clips) {
         }
         return a.start > b.start;
       });
-      for (const { start: rs, end: re } of sortedRanges) {
+      sortedRanges.every(({ start: rs, end: re }) => {
         const newClip = { src: `${clip.hash}-${rs}-${re}` };
         if (cursor >= rs && cursor <= re) {
           if (re > end) {
             newClip.start = cursor - rs;
             newClip.end = end - rs;
             result.push(newClip);
-            break;
+            return false;
           }
 
           if (cursor !== rs) {
@@ -123,8 +123,9 @@ export function trimRendered(clips) {
           cursor = re;
           result.push(newClip);
         }
-      }
+        return true;
+      });
     }
-  }
+  });
   return result;
 }
