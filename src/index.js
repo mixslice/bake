@@ -31,7 +31,7 @@ console.log('worker API:', workerAPIRoot);
 const projectVolume = process.env.PROJECT_VOLUME || path.join(__dirname, '../sample/');
 console.log('project volume:', projectVolume);
 const worker = new Worker(workerAPIRoot);
-const filename = path.join(__dirname, projectVolume, 'demo.xml');
+const filename = path.join(projectVolume, 'demo.xml');
 
 /**
  * provide root route
