@@ -64,24 +64,28 @@ export function mergeHashMap(cakes) {
  * @returns {Object} Returns the new cakes
  */
 export function filterRendered(hashMap) {
-  const result = {};
-  Object.keys(hashMap).forEach((key) => {
-    const renderedRanges = getRenderedObjectWithHash(key);
-    const cake = hashMap[key];
-    if (renderedRanges) {
-      const { ranges, ...cakeProps } = cake;
-      const newRanges = ranges
-      .map(range => subtract(range, renderedRanges))
-      .reduce((a, b) => [...a, ...b]);
+  const promises = Object.keys(hashMap).map(hash =>
+    getRenderedObjectWithHash(hash).then((renderedRanges) => {
+      const result = {};
+      const cake = hashMap[hash];
+      if (renderedRanges) {
+        const { ranges, ...cakeProps } = cake;
+        const newRanges = ranges
+        .map(range => subtract(range, renderedRanges))
+        .reduce((a, b) => [...a, ...b]);
 
-      if (newRanges.length > 0) {
-        result[key] = { ranges: newRanges, ...cakeProps };
+        if (newRanges.length > 0) {
+          result[hash] = { ranges: newRanges, ...cakeProps };
+        }
+      } else {
+        result[hash] = cake;
       }
-    } else {
-      result[key] = cake;
-    }
-  });
-  return result;
+      return result;
+    })
+  );
+  return Promise.all(promises).then(
+    data => data.reduce((result, d) => ({ ...result, ...d }))
+  );
 }
 
 
@@ -93,10 +97,10 @@ export function filterRendered(hashMap) {
  * @returns
  */
 export function trimRendered(clips) {
-  const result = [];
-  clips.forEach((clip) => {
-    const renderedRanges = getRenderedObjectWithHash(clip.hash);
-    if (renderedRanges) {
+  const promises = clips.map(clip =>
+    getRenderedObjectWithHash(clip.hash)
+    .then((renderedRanges) => {
+      const result = [];
       const { start, end } = clip;
       let cursor = start;
       const sortedRanges = renderedRanges.sort((a, b) => {
@@ -125,7 +129,10 @@ export function trimRendered(clips) {
         }
         return true;
       });
-    }
-  });
-  return result;
+      return result;
+    }) // promise
+  );
+  return Promise.all(promises).then(
+    data => data.reduce((result, d) => [...result, ...d])
+  );
 }

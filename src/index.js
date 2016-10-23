@@ -54,12 +54,12 @@ app.get('/render', (req, res) => {
   // cakes for worker to render
   cakes
   .then(mergeHashMap)
-  .then(filterRendered)
+  .then(data => filterRendered(data))
   .then(data => Object.keys(data).map(key => ({ hash: key, ...data[key] })))
   .then((data) => {
     // send jobs to worker
     data.forEach((cake) => {
-      worker.send({ cakes: [cake] });
+      worker.send(cake);
     });
 
     return data;
@@ -88,8 +88,12 @@ app.get('/export', (req, res) => {
   // sequence for worker to concat
   cakes
   .then(data => data.map(({ hash, start, end }) => ({ hash, start, end })))
-  .then(trimRendered)
-  .then(data => worker.concat({ sequence: data }))
+  .then(data => trimRendered(data))
+  .then((sequence) => {
+    console.log(sequence);
+    return sequence;
+  })
+  .then(sequence => worker.concat(sequence))
   .then((data) => {
     console.log('export job:', data);
     res.json(data);

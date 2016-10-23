@@ -1,36 +1,38 @@
 import fetch from 'isomorphic-fetch';
+import { saveRenderedObject } from './renderStore';
 
 export default class Worker {
   constructor(apiRoot) {
     this.apiRoot = apiRoot;
   }
 
-  send(body) {
+  send(cake) {
     fetch(`${this.apiRoot}/app/render`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ cakes: [cake] }),
     })
     .then(response => response.json())
     .then((data) => {
       console.log('worker request succeeded with JSON response', data);
+      saveRenderedObject(cake.hash, cake.ranges);
     })
     .catch((error) => {
       console.log('request failed', error);
     });
   }
 
-  concat(body) {
+  concat(sequence) {
     return fetch(`${this.apiRoot}/app/concat`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ sequence }),
     })
     .then(response => response.json())
     .then((data) => {

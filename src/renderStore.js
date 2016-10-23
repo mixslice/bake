@@ -1,30 +1,22 @@
 // import { mergeRangesWithData } from './merge';
+import redis from 'redis';
+
+const client = redis.createClient();
+
+client.on('error', (err) => {
+  console.log('Error', err);
+});
 
 /**
  * simulate the rendered media database
  */
-const rendered = {
-/**
- * [hash]: [
- *   { start, end, data: [fileId] },
- * ],
- */
-  '9b9a6b534566e1425b9a59e4a3ad8934': [
-    { start: 0, end: 117 },
-    { start: 786, end: 901 },
-  ],
-  e19cb00c065230a22f3ee596d9d2f3da: [
-    { start: 0, end: 156 },
-    { start: 325, end: 463 },
-    { start: 784, end: 915 },
-  ],
-  dee075b4358e45d991a3862698b686f4: [
-    { start: 0, end: 169 },
-  ],
-  '79a36da9e910f3e97677ecf9d4ef0092': [
-    { start: 580, end: 786 },
-  ],
-};
+// const rendered = {
+// /**
+//  * [hash]: [
+//  *   { start, end, data: [fileId] },
+//  * ],
+//  */
+// };
 
 /**
  * get rendered object from database
@@ -33,7 +25,21 @@ const rendered = {
  * @returns {Object}
  */
 export function getRenderedObjectWithHash(hash) {
-  return rendered[hash];
+  return new Promise((resolve, reject) => {
+    client.hkeys(hash, (err, replies) => {
+      if (err) {
+        reject(err);
+      } else {
+        const result = replies.map((reply) => {
+          const r = reply.split(',');
+          const start = Number(r[0]);
+          const end = Number(r[1]);
+          return { start, end };
+        });
+        resolve(result);
+      }
+    });
+  });
 }
 
 /**
@@ -42,9 +48,9 @@ export function getRenderedObjectWithHash(hash) {
  * @param {String} hash
  * @param {Object} newRendered
  */
-export function saveRenderedObject(hash, newRendered) {
+export function saveRenderedObject(hash, ranges) {
   // rendered[hash] = mergeRangesWithData(rendered, newRendered);
-  const { start, end } = newRendered;
-  rendered[hash] = rendered[hash] || [];
-  rendered[hash].push({ start, end });
+  ranges.forEach(({ start, end }) => {
+    client.hset(hash, `${start},${end}`, 'continue', redis.print);
+  });
 }
