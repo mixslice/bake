@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  bake-worker:
+    image: 'daocloud.io/mixslice/bake-worker'
+    volumes:
+      - .:/code
+      - ./videos:/videos
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_SERVER=redis
+    command: python main.py
+  redis:
+    image: 'redis:3.0-alpine'
+    ports:
+      - '6379:6379'

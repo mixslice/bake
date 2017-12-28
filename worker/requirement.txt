@@ -1,0 +1,4 @@
+webapp2==2.5.2
+WebOb==1.6.1
+Paste==2.0.3
+redis==2.10.5

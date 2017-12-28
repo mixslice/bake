@@ -1,0 +1,104 @@
+[
+  {
+    "hash": "9b9a6b534566e1425b9a59e4a3ad8934",
+    "ranges": [
+      {
+        "start": 0,
+        "end": 140
+      },
+      {
+        "start": 786,
+        "end": 901
+      }
+    ],
+    "clips": [
+      {
+        "offset": 0,
+        "video": {
+          "offset": 0,
+          "ref": "77b2229en0b5dn4f4fn88e2n4798bfff66aa",
+          "duration": 1118
+        }
+      }
+    ]
+  },
+  {
+    "hash": "e19cb00c065230a22f3ee596d9d2f3da",
+    "ranges": [
+      {
+        "start": 0,
+        "end": 156
+      },
+      {
+        "start": 325,
+        "end": 463
+      },
+      {
+        "start": 784,
+        "end": 915
+      }
+    ],
+    "clips": [
+      {
+        "offset": 0,
+        "video": {
+          "offset": 0,
+          "ref": "42452a7dne624n4363nbaadn64d422d53f12",
+          "duration": 915
+        }
+      }
+    ]
+  },
+  {
+    "hash": "dee075b4358e45d991a3862698b686f4",
+    "ranges": [
+      {
+        "start": 0,
+        "end": 169
+      }
+    ],
+    "clips": [
+      {
+        "offset": 0,
+        "video": {
+          "offset": 0,
+          "ref": "4f7b022fn88b3n4703n9ac4n642fbdcc817a",
+          "duration": 513
+        }
+      }
+    ]
+  },
+  {
+    "hash": "79a36da9e910f3e97677ecf9d4ef0092",
+    "ranges": [
+      {
+        "start": 580,
+        "end": 786
+      }
+    ],
+    "clips": [
+      {
+        "offset": 0,
+        "video": {
+          "offset": 0,
+          "ref": "77b2229en0b5dn4f4fn88e2n4798bfff66aa",
+          "duration": 1118
+        }
+      },
+      {
+        "offset": 273,
+        "adjust-crop": {
+          "mode": "trim",
+          "trim-rect": {
+            "right": "88.8889"
+          }
+        },
+        "video": {
+          "offset": 0,
+          "ref": "4f7b022fn88b3n4703n9ac4n642fbdcc817a",
+          "duration": 513
+        }
+      }
+    ]
+  }
+]
